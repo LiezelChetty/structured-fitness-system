@@ -1,3 +1,6 @@
+const workoutTitle = document.getElementById("workoutTitle");
+workoutTitle.textContent = getTodayWorkout();
+
 const workouts = {
   Monday: {
     title: "Lower Body",
