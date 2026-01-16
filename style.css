@@ -82,3 +82,9 @@ button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
+.streak {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #fbbf24;
+}
+
