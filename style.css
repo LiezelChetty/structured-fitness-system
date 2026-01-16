@@ -68,3 +68,17 @@ button:hover {
   font-size: 14px;
   color: #6aff95;
 }
+.status {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #9ae6b4;
+}
+
+.hidden {
+  display: none;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
