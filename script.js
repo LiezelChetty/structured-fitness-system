@@ -65,6 +65,17 @@ if (workout) {
   workoutTitle.textContent = "Rest Day";
   workoutList.innerHTML = "<li>Take the day off guilt-free.</li>";
 }
+const workoutsByDay = {
+  1: "Full Body",
+  2: "Lower Body",
+  3: "Core",
+  4: "Upper Body",
+  5: "Full Body",
+};
+function getTodayWorkout() {
+  const day = new Date().getDay(); // 0 = Sunday
+  return workoutsByDay[day] || "Rest / Mobility";
+}
 
 startBtn.addEventListener("click", () => {
   status.textContent = "Workout started. Just keep moving 💪";
