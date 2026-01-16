@@ -1,6 +1,4 @@
-const workoutTitle = document.getElementById("workoutTitle");
-workoutTitle.textContent = getTodayWorkout();
-
+// ---------- WORKOUT DATA ----------
 const workouts = {
   Monday: {
     title: "Lower Body",
@@ -8,8 +6,8 @@ const workouts = {
       "Squats — 3 × 12",
       "Glute bridges — 3 × 15",
       "Reverse lunges — 3 × 10",
-      "Wall sit — 30 sec"
-    ]
+      "Wall sit — 30 sec",
+    ],
   },
   Tuesday: {
     title: "Upper Body",
@@ -17,8 +15,8 @@ const workouts = {
       "Push-ups — 3 × 10",
       "Shoulder taps — 3 × 20",
       "Tricep dips — 3 × 12",
-      "Plank — 30 sec"
-    ]
+      "Plank — 30 sec",
+    ],
   },
   Wednesday: {
     title: "Active Recovery",
@@ -26,8 +24,8 @@ const workouts = {
       "Light walk — 15 min",
       "Stretch hips",
       "Stretch shoulders",
-      "Deep breathing — 3 min"
-    ]
+      "Deep breathing — 3 min",
+    ],
   },
   Thursday: {
     title: "Lower Body",
@@ -35,8 +33,8 @@ const workouts = {
       "Squats — 3 × 12",
       "Step-backs — 3 × 10",
       "Glute bridges — 3 × 15",
-      "Calf raises — 3 × 20"
-    ]
+      "Calf raises — 3 × 20",
+    ],
   },
   Friday: {
     title: "Full Body",
@@ -44,52 +42,58 @@ const workouts = {
       "Squats — 3 × 12",
       "Push-ups — 3 × 10",
       "Dead bug — 3 × 20",
-      "Plank — 30 sec"
-    ]
-  }
+      "Plank — 30 sec",
+    ],
+  },
 };
 
-const day = new Date().toLocaleDateString("en-US", { weekday: "long" });
-const workout = workouts[day];
-
+// ---------- DOM ELEMENTS ----------
 const workoutTitle = document.getElementById("workout-title");
 const workoutList = document.getElementById("workout-list");
-const status = document.getElementById("status");
-const startBtn = document.getElementById("startBtn");
+const statusMessage = document.getElementById("statusMessage");
+const startButton = document.getElementById("startWorkout");
+const streakEl = document.getElementById("streak");
+
+// ---------- LOAD TODAY'S WORKOUT ----------
+const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
+const workout = workouts[today];
 
 if (workout) {
   workoutTitle.textContent = workout.title;
-  workout.exercises.forEach(ex => {
+
+  workout.exercises.forEach((exercise) => {
     const li = document.createElement("li");
-    li.textContent = ex;
+    li.textContent = exercise;
     workoutList.appendChild(li);
   });
 } else {
   workoutTitle.textContent = "Rest Day";
   workoutList.innerHTML = "<li>Take the day off guilt-free.</li>";
 }
-const workoutsByDay = {
-  1: "Full Body",
-  2: "Lower Body",
-  3: "Core",
-  4: "Upper Body",
-  5: "Full Body",
-};
-function getTodayWorkout() {
-  const day = new Date().getDay(); // 0 = Sunday
-  return workoutsByDay[day] || "Rest / Mobility";
+
+// ---------- STREAK LOGIC ----------
+function updateStreak() {
+  const today = new Date().toDateString();
+  const lastWorkout = localStorage.getItem("lastWorkout");
+  let streak = Number(localStorage.getItem("streak")) || 0;
+
+  if (lastWorkout !== today) {
+    streak += 1;
+    localStorage.setItem("streak", streak);
+    localStorage.setItem("lastWorkout", today);
+  }
+
+  streakEl.textContent = `${streak}-day streak 🔥`;
+  streakEl.classList.remove("hidden");
 }
 
-startBtn.addEventListener("click", () => {
-  status.textContent = "Workout started. Just keep moving 💪";
-});
-const startButton = document.getElementById("startWorkout");
-const statusMessage = document.getElementById("statusMessage");
-
+// ---------- CLICK HANDLER ----------
 startButton.addEventListener("click", () => {
   startButton.textContent = "Workout in progress";
   startButton.disabled = true;
 
-  statusMessage.textContent = "You showed up today ✅";
+  statusMessage.textContent = "Workout started. Just keep moving 💪";
   statusMessage.classList.remove("hidden");
+
+  updateStreak();
 });
