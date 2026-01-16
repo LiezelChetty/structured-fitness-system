@@ -69,3 +69,13 @@ if (workout) {
 startBtn.addEventListener("click", () => {
   status.textContent = "Workout started. Just keep moving 💪";
 });
+const startButton = document.getElementById("startWorkout");
+const statusMessage = document.getElementById("statusMessage");
+
+startButton.addEventListener("click", () => {
+  startButton.textContent = "Workout in progress";
+  startButton.disabled = true;
+
+  statusMessage.textContent = "You showed up today ✅";
+  statusMessage.classList.remove("hidden");
+});
